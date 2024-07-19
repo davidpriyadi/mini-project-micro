@@ -1,8 +1,11 @@
 package com.libra.book_service.controller;
 
 import com.libra.book_service.dto.BookDTO;
+import com.libra.book_service.dto.BookFilterDTO;
 import com.libra.book_service.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,8 +19,8 @@ public class BookController {
     private BookService bookService;
 
     @GetMapping
-    public ResponseEntity<List<BookDTO>> getAllBooks() {
-        return ResponseEntity.ok(bookService.getAllBooks());
+    public ResponseEntity<Page<BookDTO>> getAllBooks(BookFilterDTO filter, Pageable pageable) {
+        return ResponseEntity.ok(bookService.searchBooks(filter, pageable));
     }
 
     @GetMapping("/{id}")
